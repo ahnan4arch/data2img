@@ -33,3 +33,5 @@
 *.sdf
 Debug/*
 Release/*
+
+!/data2img.exe

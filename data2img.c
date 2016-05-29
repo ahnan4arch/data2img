@@ -1,7 +1,11 @@
 // data2img.cpp : Defines the entry point for the console application.
 //
-
+#ifdef __GNUC__
+#include "SDL2/SDL.h"
+#else
 #include "SDL.h"
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -101,12 +105,12 @@ int procReverseBytes(uint8_t *buf, size_t len, int bpp)
 	}
 
 	uint8_t *tmpbuf = NULL;
-	uint8_t tmpbyte = NULL;
+	uint8_t tmpbyte = 0;
 
 	for (size_t i = 0; i < len / bpp; i++)
 	{
 		tmpbuf = buf + i * bpp;
-		for (size_t j = 0; j < bpp/2; j++)
+		for (size_t j = 0; j < (size_t)(bpp/2); j++)
 		{
 			tmpbyte = tmpbuf[j];
 			tmpbuf[j] = tmpbuf[bpp - 1 - j];
@@ -233,7 +237,7 @@ int procArguments(int argc, char *argv[])
 			{
 				srcFileFormat = FF_BIN;
 			}
-			else if (strnlen(temp, 1) == 1){
+			else if (strlen(temp) == 1){
 				srcFileFormat = FF_SPLIT;
 				splitString = temp;
 			}
@@ -311,7 +315,7 @@ void usage()
 	printf("\n");
 	printf("Version 0.0.1\n");
 }
-
+#undef main
 int main(int argc, char *argv[])
 {
 	if (procArguments(argc, argv)){
