@@ -1,0 +1,1 @@
+Debug\data2img -i girl.bin -o girl.bmp -h 480 -w 320 -l bin -f rgb565 -d
